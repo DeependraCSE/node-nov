@@ -1,0 +1,7 @@
+command to create a node project
+--------------------------------
+npm init
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
