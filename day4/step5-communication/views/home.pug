@@ -1,0 +1,16 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+    body 
+        h1 Avenger's App 
+        br
+        form(action="#" method="post")
+            input(name="avenger" type="text")
+            button Add Avenger 
+        hr
+        ol
+            each hero in data
+                li= hero
