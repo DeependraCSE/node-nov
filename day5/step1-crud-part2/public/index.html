@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read | Write to DB</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", init);
+        function loaddata(){
+            fetch("/data",{method : "GET"})
+            .then((dbres)=>{
+                return dbres.json();
+            })
+            .then((jsondata)=>{
+                // console.log(jsondata);
+                // console.log(jsondata.length)
+                jsondata.forEach((val, idx)=>{
+                    document.getElementById("box").innerHTML+=`
+                    <tr>
+                        <td>${idx + 1}</td>
+                        <td>${ val.title }</td>
+                        <td>${ val.firstname }</td>
+                        <td>${ val.lastname }</td>
+                        <td>${ val.city }</td>
+                        <td><button class="btn btn-warning"> Edit </button> </td>
+                        <td><button class="btn btn-danger"> Delete </button> </td>
+                    </tr>
+                `
+                })
+                
+            })
+            .catch((error)=>{
+                console.log("Error ", error)
+            })
+        }
+        function init(){
+            document.getElementsByTagName("button")[0].addEventListener("click", clickHandler);
+            document.getElementsByTagName("button")[1].addEventListener("click", addFriendHandler);
+        };
+        function clickHandler(){
+            // alert("button was clicked");
+            loaddata();
+        };
+
+        function addFriendHandler(){
+            let title = document.getElementById("titleip").value;
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let city = document.getElementById("city").value;
+            if(title && fname && lname && city){
+                fetch("/data",{
+                headers: { "Content-Type": "application/json" },
+                method : "POST",
+                body : JSON.stringify({
+                    "title" : document.getElementById("titleip").value,
+                    "firstname" : document.getElementById("fname").value,
+                    "lastname" : document.getElementById("lname").value,
+                    "city" : document.getElementById("city").value,
+            }),
+            })
+            .then((dbres) => dbres)
+            .then((dbres) => {
+                console.log("DB Response", dbres);
+                loaddata();
+            })
+            .catch((error) => console.log("Error ", error))
+            }
+            else{
+                alert("please fill all the details")
+            }
+            
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+    <h1>Friends List</h1>
+    <button class="btn btn-primary">Load Data</button>
+    <hr>
+    <div class="mb-3">
+        <label for="titleip" class="form-label">Friend's Title</label>
+        <input class="form-control" id="titleip">
+    </div>
+    <div class="mb-3">
+        <label for="fname" class="form-label">Friend's First Name</label>
+        <input class="form-control" id="fname">
+    </div>
+    <div class="mb-3">
+        <label for="lname" class="form-label">Friend's Last Name</label>
+        <input class="form-control" id="lname">
+    </div>
+    <div class="mb-3">
+        <label for="city" class="form-label">Friend's City</label>
+        <input class="form-control" id="city">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Friend Info</button>
+    <br>
+    <br>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Sl #</th>
+                <th>Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>City</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="box"></tbody>
+    </table>
+
+</div>
+</body>
+</html>
