@@ -1,0 +1,21 @@
+{
+  "name": "step5-http-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "step1.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mocha": "^9.1.1",
+    "mongoose": "^6.0.5",
+    "morgan": "^1.10.0"
+  }
+}
